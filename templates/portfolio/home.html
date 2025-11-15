@@ -22,6 +22,9 @@
       --navbar-bg: #fff;
       --skill-bg: #ddd;
       --progress-color: #007BFF;
+      --card-bg: #ffffff;
+      --input-bg: #ffffff;
+
     }
 
     body.dark-mode {
@@ -32,6 +35,9 @@
       --navbar-bg: #1a1a1a;
       --skill-bg: #333;
       --progress-color: #1E90FF;
+      --card-bg: #1e1e1e;
+      --input-bg: #2a2a2a;
+
     }
 
     body {
@@ -359,12 +365,11 @@
     }
 
 .muted {
-  color: var(--text-color);
+  color: var(--secondary-color);
+  opacity: 0.8;
   font-size: 0.9rem;
-  opacity: 0.6;
-  
-
 }
+
 
 
     {% comment %} contact {% endcomment %}
@@ -531,8 +536,8 @@
 }
 
 {% comment %} certificatiobs {% endcomment %}
-#certificatations {
-    padding: 2px 20px 20px 20px;
+#certifications {
+    padding: 20px 20px 20px 20px;
     background-color: #f9f9f9;
     
 }
@@ -579,7 +584,24 @@
 .certificate-card a:hover {
     background-color: #0056b3;
 }
+/* Dark Mode Styles */
+body.dark-mode #certifications {
+    background-color: #121212;
+    color: #e0e0e0;
+}
 
+body.dark-mode .certificate-card {
+    background-color: #1e1e1e;
+    border: 1px solid #1E90FF;
+}
+
+body.dark-mode .certificate-card .text-muted {
+    color: #e0e0e0;
+}
+
+body.dark-mode .certificate-card a {
+    color: #e0e0e0;
+}
 
    #footer {
     background-color: #f9f9f9;
@@ -589,25 +611,45 @@
 }
 
 .footer-divider {
-    height: 1px;
-    background-color: #0056b3;  /* color of the divider line */
+    height: 2px;
+    background-color: var(--primary-color);  /* color of the divider line */
     margin-bottom: 5px;      /* space between line and text */
 }
 
-#footer a {
-    color: #007bff;
-    text-decoration: none;
-    margin: 0 5px;
-}
-
-#footer a:hover {
-    text-decoration: underline;
-}
 
 .footer-minimal {
     padding: 10px 0;
+    text-align: center;
+    color: var(--text-color);
 }
- 
+ /* Social icons */
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+.footer-social a {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    transition: 0.3s;
+}
+
+.footer-social a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Dark Mode Support */
+/* Dark mode styles */
+body.dark-mode #footer {
+    background-color:#121212; /* black background */
+    color:  #e0e0e0; /* light text */
+}
+
+body.dark-mode #footer a {
+    color: #1E90FF; /* blue links */
+}
   </style>
 </head>
 <body>
@@ -818,14 +860,27 @@
 
     <footer id="footer">
     <div class="footer-divider"></div>
+
     <div class="footer-minimal">
-        <p>&copy; 2025 Divya Makvana Portfolio All rights reserved. 
-           <a href="#projects">Projects</a> | 
-           <a href="#certifications">Certificates</a> | 
-           <a href="#contact">Contact</a>
+         <p>
+            &copy;2025 <strong>Divya Makvana</strong> Portfolio — All rights reserved.
+            
+           
         </p>
+        <div class="footer-social">
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/divyamakvana" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="mailto:divyamakvana3004@gmail.com">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
     </div>
 </footer>
+
 
 
 
