@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+
+
+  <title>Divya Makvana Portfolio</title>
+  <style>
+    html {
+  scroll-behavior: smooth;
+}
+
+    /* CSS Variables for light/dark mode */
+    :root {
+      --bg-color: #f9f9f9;
+      --text-color: #333;
+      --primary-color: #007BFF;
+      --secondary-color: #555;
+      --navbar-bg: #fff;
+      --skill-bg: #ddd;
+      --progress-color: #007BFF;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --primary-color: #1E90FF;
+      --secondary-color: #aaa;
+      --navbar-bg: #1a1a1a;
+      --skill-bg: #333;
+      --progress-color: #1E90FF;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background-color: var(--primary-color);
+      z-index: 1000;
+      transition: width 0.25s ease-out;
+    }
+
+    /* Navbar */
+    nav {
+      background-color: var(--navbar-bg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 999;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo a {
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      background: blue;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+
+    .menu {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    .menu a:hover {
+      color: var(--primary-color);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+    }
+
+    #dark-mode-toggle {
+      cursor: pointer;
+      padding: 5px 10px;
+      border: none;
+      
+      color: white;
+      border-radius: 5px;
+      font-weight: 500;
+      margin-left: 1rem;
+    }
+    section {
+  padding: 70px 20px;
+
+}
+#skills,
+#projects,
+#contact {
+  padding: 70px 20px;
+}
+    /* About Section */
+    #about {
+     padding: 80px 20px 40px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    #about img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 4px solid var(--primary-color);
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    #about .text {
+      max-width: 600px;
+      margin-left: 70px;
+    }
+
+    #about h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    #about h1 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      min-height: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    #about .tea-line {
+      margin-top: 10px;
+      font-style: italic;
+      color: var(--secondary-color);
+      font-size: 1.1rem;
+    }
+
+    /* Skills Section */
+    #skills {
+      padding: 10px 20px 20px 20px;
+      background-color: var(--bg-color);
+    }
+
+    #skills h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 50px;
+      margin-top: 2px;
+      color: var(--text-color);
+    }
+
+    .skill {
+     margin-bottom: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .skill p {
+      margin: 0 0 5px 0;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background-color: var(--skill-bg);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background-color: var(--progress-color);
+      border-radius: 10px;
+      transition: width 2s ease;
+    }
+
+    /* Projects Section */
+    #projects {
+       padding: 10px 20px 20px 20px;
+      background-color: var(--bg-color);
+    }
+
+    #projects h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 50px;
+      color: var(--text-color);
+    }
+
+    .projects-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .project-card {
+      background-color: var(--navbar-bg);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #007BFF;
+      width: 300px;
+      height: 200px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    
+    .project-card h3 {
+      margin: 10px 0 5px 0;
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
+
+    .project-card p {
+      font-size: 0.95rem;
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+    }
+
+    .project-card a {
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .project-card a:hover {
+      text-decoration: underline;
+    }
+    
+.project-content {
+    flex-grow: 1; /* makes all cards take equal height in content */
+}
+
+.project-card .description {
+    margin-bottom: 10px;
+}
+
+.project-card .tech-stack,
+.project-card .date {
+    margin-bottom: 5px;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.tech-badge {
+    background-color: #007bff;
+    color: white;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.project-links a {
+    margin-right: 10px;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+    /* Responsive */
+    @media (max-width: 768px) {
+      #about {
+        flex-direction: column;
+        text-align: center;
+      }
+      #about .text {
+        margin-left: 0;
+      }
+
+      .menu {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: var(--navbar-bg);
+        flex-direction: column;
+        align-items: center;
+        display: none;
+        border-top: 1px solid #ddd;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .projects-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .project-card {
+        width: 90%;
+      }
+    }
+
+.muted {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  opacity: 0.6;
+  
+
+}
+
+
+    {% comment %} contact {% endcomment %}
+ /* =======================
+   CONTACT SECTION
+======================= */
+#contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 60px 10%;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* ========== LEFT SIDE ========== */
+.contact-left {
+  width: 40%;
+  
+}
+
+.contact-left h2 {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  
+  margin-top: 2px;
+}
+
+.contact-left p {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Contact Items */
+.contact-item {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  text-decoration: none;
+  color: var(--text-color);
+  margin-bottom: 15px;
+  transition: 0.3s ease;
+}
+
+.contact-item i {
+  font-size: 20px;
+  margin-right: 10px;
+  color: var(--primary-color);
+}
+
+.contact-item:hover {
+  opacity: 0.7;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top: 20px;
+  display: flex;
+  gap: 18px;
+}
+
+.social-icons a i {
+  font-size: 26px;
+  color: var(--primary-color);
+  transition: 0.3s;
+}
+
+.social-icons a i:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
+}
+
+/* ========== RIGHT SIDE ========== */
+.contact-right {
+  width: 50%;
+}
+
+.contact-card {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #007BFF;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
+  margin-top: 2px;
+}
+
+/* Success message */
+.success-message {
+  background: #e7ffe7;
+  color: #1b8f1b;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border-left: 5px solid #1b8f1b;
+}
+
+/* Form Styles */
+.contact-form .form-group {
+  margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 95%;
+  padding: 14px 16px;
+  border: 2px solid #dcdcdc;
+  border-radius: 10px;
+  font-size: 15px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  outline: none;
+  transition: 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0px 0px 4px rgba(0, 115, 255, 0.4);
+}
+
+.contact-form textarea {
+  height: 150px;
+  resize: none;
+}
+
+/* Submit Button */
+.contact-form button {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  #contact {
+    flex-direction: column;
+    padding: 40px 5%;
+  }
+
+  .contact-left,
+  .contact-right {
+    width: 100%;
+  }
+
+  .social-icons {
+    margin-bottom: 20px;
+  }
+}
+
+{% comment %} certificatiobs {% endcomment %}
+#certificatations {
+    padding: 2px 20px 20px 20px;
+    background-color: #f9f9f9;
+    
+}
+#certifications h2{
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 50px;
+  margin-top: 2px;
+}
+.certificates-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.certificate-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    border: 1px solid #007BFF;
+    padding: 15px 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certificate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.certificate-card a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #fff;
+    background-color: #007BFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.certificate-card a:hover {
+    background-color: #0056b3;
+}
+
+
+   #footer {
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+    font-size: 13px;
+}
+
+.footer-divider {
+    height: 1px;
+    background-color: #0056b3;  /* color of the divider line */
+    margin-bottom: 5px;      /* space between line and text */
+}
+
+#footer a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+#footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-minimal {
+    padding: 10px 0;
+}
+ 
+  </style>
+</head>
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">
+    <a href="#home"><span>&lt;/&gt;</span> Divya Makvana</a>
+</div>
+
+      <div class="menu" id="menu">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+        <a href="{% static 'files/DivyaMakvana_PythonDeveloper_Resume.pdf' %}" download>Resume</a>
+      </div>
+      <div style="display:flex; align-items:center;">
+        <div class="hamburger" id="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <button id="dark-mode-toggle" title="Toggle Dark Mode" style="cursor:pointer; padding:5px 10px; border:none;  color:white; border-radius:5px; font-size:1rem;">
+  🌙
+</button>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <section id="about">
+    <img src="{% static 'images/profilepic.jpeg' %}" alt="Your Name">
+    <div class="text">
+      <h2>Hi, I am</h2>
+      <h1 id="typing"></h1>
+      <p>
+        Passionate about building scalable applications and learning new technologies. I enjoy turning ideas into reality with clean and efficient code.
+      </p>
+      <p class="tea-line">Out of coding, I love sipping tea too much ☕</p>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skill">
+      <p>Python</p>
+      <div class="progress-bar"><div class="progress" data-width="90%"></div></div>
+    </div>
+    <div class="skill">
+      <p>Django</p>
+      <div class="progress-bar"><div class="progress" data-width="85%"></div></div>
+    </div>
+    <div class="skill">
+      <p>MySQL</p>
+      <div class="progress-bar"><div class="progress" data-width="80%"></div></div>
+    </div>
+    <div class="skill">
+      <p>JavaScript</p>
+      <div class="progress-bar"><div class="progress" data-width="75%"></div></div>
+    </div>
+    <div class="skill">
+      <p>HTML & CSS</p>
+      <div class="progress-bar"><div class="progress" data-width="95%"></div></div>
+    </div>
+     <!-- Combined Skill -->
+    <div class="skill">
+       <p>Data Analysis (NumPy, Pandas, Matplotlib)</p>
+      <div class="progress-bar"><div class="progress" data-width="80%"></div></div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+<section id="projects">
+    <h2>My Projects</h2>
+    <div class="projects-container">
+        {% for project in projects %}
+        <div class="project-card">
+            <!-- Main content section -->
+            <div class="project-content">
+                <h3>{{ project.title }}</h3>
+                {% comment %} <span  class="date muted">{{ project.date_completed|date:"M Y" }}</span> {% endcomment %}
+                <!-- Links section at bottom -->
+            <div class="project-links muted">
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" class="muted"><i class="fas fa-link"></i> GitHub</a>
+                {% endif %}
+               
+            </div>
+          
+                <p class="description">{{ project.description|truncatechars:150 }}</p>
+                
+                  </div>
+            <!-- Tech stack badges -->
+            <div class="tech-stack">
+                {% for tech in project.tech_list %}
+                    <span class="tech-badge">{{ tech }}</span>
+                {% endfor %}
+            </div>
+            
+        </div>
+        {% empty %}
+        <p>No projects added yet.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="certifications">
+    <h2>Certifications</h2>
+    <div class="certificates-container">
+        {% for cert in certificates %}
+        <div class="certificate-card">
+          <span class="text-muted">{{cert.company}}</span>
+            <h3>{{ cert.title }}</h3>
+            <p>Issued  {{ cert.date_earned|date:"M Y" }}</p>
+            <a href="{{ cert.certificate_link }}" target="_blank">View Certificate</a>
+        </div>
+        {% empty %}
+        <p>No certificates added yet.</p>
+        {% endfor %}
+    
+    </div>
+</section>
+
+
+
+
+
+<section id="contact">
+ 
+  <!-- Left Side: Contact Info -->
+  <div class="contact-left">
+     <h2>Let’s Connect</h2>
+    <p>
+      Feel free to reach out to discuss projects, ideas, or to simply connect. I’m always open to meaningful conversations
+    </p>
+
+    <div class="contact-info">
+      
+      <!-- Email -->
+      <a href="mailto:divyamakvana3004@gmail.com" class="contact-item">
+        <i class="fa-solid fa-envelope "></i>
+        divyamakvana3004@gmail.com
+      </a>
+
+      <!-- Phone -->
+      <a href="tel:+911234567890" class="contact-item">
+        <i class="fa-solid fa-mobile-screen"></i>
+        +91 9978590164
+      </a>
+
+      <!-- Social Icons -->
+      <div class="social-icons">
+        <a href="https://www.linkedin.com/in/divya-makvana-295b6935b/" target="_blank">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="https://github.com/divyamakvana" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Right Side: Contact Form -->
+  <div class="contact-right">
+    <div class="contact-card">
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+<form method="post" class="contact-form" action="{% url 'contact_view' %}">
+    {% csrf_token %}
+    
+    <!-- Name -->
+    <div class="form-group">
+        <input type="text" name="name" required placeholder="Your Name">
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+        <input type="email" name="email" required placeholder="Enter Your Email">
+    </div>
+
+    <!-- Message -->
+    <div class="form-group">
+        <textarea name="message" required placeholder="Write your message here..."></textarea>
+    </div>
+
+    <button type="submit">Reach  Me Out</button>
+</form>
+  </div>
+  </div>
+
+</section>
+
+    <footer id="footer">
+    <div class="footer-divider"></div>
+    <div class="footer-minimal">
+        <p>&copy; 2025 Divya Makvana Portfolio All rights reserved. 
+           <a href="#projects">Projects</a> | 
+           <a href="#certifications">Certificates</a> | 
+           <a href="#contact">Contact</a>
+        </p>
+    </div>
+</footer>
+
+
+
+
+
+
+  <!-- JS -->
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const menu = document.getElementById('menu');
+    hamburger.addEventListener('click', () => {
+      menu.classList.toggle('active');
+    });
+
+    // Dark mode toggle
+   const toggleBtn = document.getElementById('dark-mode-toggle');
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+
+  // Change icon based on mode
+  if(document.body.classList.contains('dark-mode')){
+    toggleBtn.textContent = '☀️'; // Light mode icon
+  } else {
+    toggleBtn.textContent = '🌙'; // Dark mode icon
+  }
+});
+
+
+    // Typing effect
+    const roles = ["Python Developer", "Backend Developer", "Web Developer"];
+    let roleIndex = 0, charIndex = 0, isDeleting = false;
+    const typingSpeed = 150, deletingSpeed = 75, pauseTime = 1000;
+
+    function type() {
+      const typingElement = document.getElementById("typing");
+      const currentRole = roles[roleIndex];
+      if (!isDeleting) {
+        typingElement.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentRole.length) { isDeleting = true; setTimeout(type, pauseTime); return; }
+      } else {
+        typingElement.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; }
+      }
+      setTimeout(type, isDeleting ? deletingSpeed : typingSpeed);
+    }
+    type();
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      document.getElementById('scroll-progress').style.width = scrollPercent + "%";
+    });
+
+    // Skills progress bars on scroll
+    const progressBars = document.querySelectorAll('.progress');
+    function animateProgress() {
+      const triggerBottom = window.innerHeight * 0.8;
+      progressBars.forEach(bar => {
+        const barTop = bar.getBoundingClientRect().top;
+        if(barTop < triggerBottom) bar.style.width = bar.getAttribute('data-width');
+      });
+    }
+    window.addEventListener('scroll', animateProgress);
+    window.addEventListener('load', animateProgress);
+
+
+    // Close mobile menu when a link is clicked
+const menuLinks = document.querySelectorAll('.menu a');
+menuLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    menu.classList.remove('active');
+  });
+});
+
+  </script>
+
+</body>
+</html>

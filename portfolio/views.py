@@ -1,0 +1,69 @@
+from django.shortcuts import render , HttpResponse, redirect
+from . models import  Project, Contact, Certificate
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+# Create your views here.
+def home(request):
+    projects = Project.objects.all().order_by('-date_completed')
+    certificates = Certificate.objects.all()
+    for project in projects:
+        project.tech_list = [tech.strip() for tech in project.tech_stack.split(',')]
+
+    context = {"projects": projects, "certificates": certificates}
+    return render(request, 'portfolio/home.html', context)
+
+
+
+
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get('name', '').strip()
+        email = request.POST.get('email', '').strip()
+        message_text = request.POST.get('message', '').strip()
+
+        if not name or not email or not message_text:
+            messages.error(request, "All fields are required.")
+        else:
+            try:
+                validate_email(email)
+
+                # Save to database
+                Contact.objects.create(name=name, email=email, message=message_text)
+
+                # Send email
+                body = f"""
+New Contact Form Submission
+
+Name: {name}
+Email: {email}
+
+Message:
+{message_text}
+"""
+                send_mail(
+                    subject=f"Portfolio Contact From {name}",
+                    message=body,
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[settings.RECEIVER_EMAIL],
+                    fail_silently=False,
+                )
+
+                # Add success message
+                messages.success(request, "Your message has been sent successfully! Thank you 😊")
+
+                # Redirect to avoid resubmission
+                return redirect('contact_view')  # or '/contact_view/'
+
+            except ValidationError:
+                messages.error(request, "Please enter a valid email address.")
+            except Exception as e:
+                messages.error(request, f"An error occurred: {e}")
+
+    return render(request, "portfolio/home.html")
+
+
+
