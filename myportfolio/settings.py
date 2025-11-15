@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-5@5u^_*m5g(4g$n(^7b*$v-5$$i1p+05d9uts6=*5b)c5n8%o^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'myportfolio.onrender.com').split(',')
+ALLOWED_HOSTS = ['portfolio.onrender.com']
 
 
 
