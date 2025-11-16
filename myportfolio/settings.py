@@ -59,6 +59,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myportfolio.wsgi.application'
 
 # EMAIL CONFIG
+EMAIL_HOST_USER = config("EMAIL_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
+RECEIVER_EMAIL = config("RECEIVER_EMAIL")
 if EMAIL_HOST_USER and EMAIL_HOST_PASSWORD:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
