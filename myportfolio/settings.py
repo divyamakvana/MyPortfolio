@@ -28,7 +28,12 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['portfolio.onrender.com']
+ALLOWED_HOSTS = [
+    "myportfolio-7j5z.onrender.com",
+    ".onrender.com",   # optional: allows all subdomains of onrender.com
+    "localhost",
+    "127.0.0.1"
+]
 
 
 
