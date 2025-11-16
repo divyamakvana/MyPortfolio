@@ -307,6 +307,7 @@
     flex-wrap: wrap;
     gap: 5px;
     margin-bottom: 10px;
+   
 }
 
 .tech-badge {
@@ -314,6 +315,7 @@
     color: white;
     font-size: 12px;
     padding: 5px 10px;
+    margin-top: 10px;
     border-radius: 20px;
     display: inline-block;
 }
@@ -381,143 +383,108 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
-  padding: 60px 10%;
+  padding: 20px 10%;
   background: var(--bg-color);
   color: var(--text-color);
 }
 
 /* ========== LEFT SIDE ========== */
+/* Container for the entire contact section */
 .contact-left {
-  width: 40%;
-  
+  width: 100%;
+  max-width: 850px;  /* limits width on large screens */
+  margin: 50px auto; /* centers horizontally */
+  text-align: center; /* center text inside */
+  padding: 20px;
+  background-color: #f9f9f9; /* optional background */
+  border-radius: 12px;       /* rounded corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* subtle shadow */
 }
 
+/* Heading */
 .contact-left h2 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
-  color: var(--text-color);
-  margin-bottom: 10px;
-  
-  margin-top: 2px;
+  color: var(--text-color, #333);
+  margin-bottom: 15px;
 }
 
+/* Paragraph */
 .contact-left p {
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 25px;
+  color: var(--text-color, #555);
 }
 
 /* Contact Items */
 .contact-item {
   display: flex;
   align-items: center;
+  justify-content: center; /* center horizontally */
   font-size: 15px;
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--text-color, #333);
   margin-bottom: 15px;
   transition: 0.3s ease;
+  gap: 10px;
 }
 
 .contact-item i {
   font-size: 20px;
-  margin-right: 10px;
-  color: var(--primary-color);
+  color: var(--primary-color, #0077b5);
 }
 
 .contact-item:hover {
-  opacity: 0.7;
+  opacity: 0.8;
+  transform: scale(1.02);
+  transition: 0.3s ease;
 }
 
 /* Social Icons */
 .social-icons {
   margin-top: 20px;
   display: flex;
+  justify-content: center; /* center icons horizontally */
   gap: 18px;
 }
 
 .social-icons a i {
   font-size: 26px;
-  color: var(--primary-color);
-  transition: 0.3s;
+  color: var(--primary-color, #0077b5);
+  transition: 0.3s ease;
 }
 
 .social-icons a i:hover {
   transform: scale(1.2);
-  opacity: 0.8;
-}
-
-/* ========== RIGHT SIDE ========== */
-.contact-right {
-  width: 50%;
-}
-
-.contact-card {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid #007BFF;
-  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
-  margin-bottom: 10px;
-  margin-top: 2px;
-}
-
-/* Success message */
-.success-message {
-  background: #e7ffe7;
-  color: #1b8f1b;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  border-left: 5px solid #1b8f1b;
-}
-
-/* Form Styles */
-.contact-form .form-group {
-  margin-bottom: 20px;
-}
-
-.contact-form input,
-.contact-form textarea {
-  width: 95%;
-  padding: 14px 16px;
-  border: 2px solid #dcdcdc;
-  border-radius: 10px;
-  font-size: 15px;
-  background: var(--input-bg);
-  color: var(--text-color);
-  outline: none;
-  transition: 0.3s;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0px 0px 4px rgba(0, 115, 255, 0.4);
-}
-
-.contact-form textarea {
-  height: 150px;
-  resize: none;
-}
-
-/* Submit Button */
-.contact-form button {
-  width: 100%;
-  padding: 14px 0;
-  border: none;
-  border-radius: 10px;
-  background: var(--primary-color);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.contact-form button:hover {
   opacity: 0.9;
-  transform: translateY(-2px);
+}
+.contact-info-inline {
+    display: flex;
+    flex-direction: column;   /* stack items vertically */
+    gap: 10px;                /* space between email and phone */
+   align-items: center;       /* center items horizontally */
+    justify-content: center; 
+}
+/* Dark Mode via body class */
+body.dark-mode .contact-left {
+  background-color: #121212;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  border: 1px solid #1E90FF;
 }
 
+body.dark-mode .contact-left h2 {
+  color: #e0e0e0;
+}
+body.dark-mode .contact-left p,
+body.dark-mode .contact-item {
+  color: #e0e0e0;
+}
+body.dark-mode .contact-item:hover,
+body.dark-mode .social-icons a i:hover {
+  opacity: 0.9;
+  transform: scale(1.1);
+}
 /* ========== RESPONSIVE ========== */
 @media (max-width: 900px) {
   #contact {
@@ -559,10 +526,11 @@
     border-radius: 10px;
     border: 1px solid #007BFF;
     padding: 15px 20px;
-    width: 250px;
+    width: 300px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
 }
 
 .certificate-card:hover {
@@ -572,7 +540,7 @@
 
 .certificate-card a {
     display: inline-block;
-    margin-top: 10px;
+    margin-top: auto;
     color: #fff;
     background-color: #007BFF;
     padding: 5px 10px;
@@ -794,7 +762,7 @@ body.dark-mode #footer a {
       Feel free to reach out to discuss projects, ideas, or to simply connect. I’m always open to meaningful conversations
     </p>
 
-    <div class="contact-info">
+   <div class="contact-info-inline">
       
       <!-- Email -->
       <a href="mailto:divyamakvana3004@gmail.com" class="contact-item">
@@ -804,7 +772,7 @@ body.dark-mode #footer a {
 
       <!-- Phone -->
       <a href="tel:+911234567890" class="contact-item">
-        <i class="fa-solid fa-mobile-screen"></i>
+         <i class="fa-solid fa-phone"></i>
         +91 9978590164
       </a>
 
@@ -826,7 +794,7 @@ body.dark-mode #footer a {
             &copy;2025 <strong>Divya Makvana</strong> Portfolio — All rights reserved.
             
            
-        </p>pip install gunicorn whitenoise dj-database-url psycopg2-binary
+        </p>
 
         <div class="footer-social social-icons">
             <a href="https://linkedin.com/in/yourprofile" target="_blank">
